@@ -2,12 +2,37 @@ const Visitor = require('../models/Visitor');
 
 exports.createVisitor = async (req, res) => {
   try {
-    const visitor = await Visitor.create(req.body);
+    console.log('Request body:', req.body); // Log the request body
+
+    // Check if required fields are present
+    if (!req.body.name || !req.body.email) {
+      return res.status(400).json({
+        success: false,
+        error: 'Please provide name, email,'
+      });
+    }
+
+    const visitor = await Visitor.create({
+      name: req.body.name,
+      email: req.body.email,
+      visitedAttractions: req.body.visitedAttractions || []
+    });
+
     res.status(201).json({
       success: true,
       data: visitor
     });
   } catch (error) {
+    console.error('Error creating visitor:', error); // Log the full error
+
+    // Handle specific MongoDB errors
+    if (error.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        error: 'A visitor with this email already exists'
+      });
+    }
+
     res.status(400).json({
       success: false,
       error: error.message
