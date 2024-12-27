@@ -97,6 +97,8 @@ All API routes are equipped with robust validation mechanisms to:
 ---
 
 ## API Endpoints
+##### Postman Link
+`https://go.postman.co/workspace/208d0e66-a364-43fa-87df-f507bb4596c4/collection/36923264-d1865bb3-677c-4a31-b056-3c242819d6d6`
 
 ### Attractions
 - `GET /api/attractions` - Retrieve all attractions
